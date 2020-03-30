@@ -15,8 +15,6 @@ class UserController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    console.log(req.body);
-
     const userExists = await User.findOne({ where: { email: req.body.email } }); // Comparar se o email que esta no banco é o mesmo email que o usuario esta tentando cadastrar
 
     if (userExists) {
@@ -51,14 +49,10 @@ class UserController {
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
-
-    console.log(req.userId);
     
     const { email, oldPassword } = req.body;
 
     const user = await User.findByPk(req.userId);
-
-    console.log("EMAIL: " + email + " / " + " PASSWORD: " + oldPassword);
 
     if (email !== user.email) {
       const userExists = await User.findOne({ where: { email } });

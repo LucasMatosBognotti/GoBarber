@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useField } from '@rocketseat/unform';
 import api from '~/services/api';
 
 import { Container } from './styles';
 
 export default function AvatarInput() {
+  const profile = useSelector(state => state.user.profile);
+
   const { defaultValue, registerField } = useField('avatar');
 
   const [ file, setFile ] = useState(defaultValue && defaultValue.id);
@@ -20,7 +23,7 @@ export default function AvatarInput() {
         path: 'dataset.file',
       });
     }
-  }, [ref]);  
+  }, [ref, registerField]);  
 
   async function handleChange(e) {
     const data = new FormData();
@@ -38,7 +41,7 @@ export default function AvatarInput() {
   return(
     <Container>
       <label htmlFor="avatar">
-        <img src={ preview || 'https://api.adorable.io/avatars/50/abott@adorable.png' } alt="Avatar" />
+        <img src={ preview || `https://api.adorable.io/avatars/50/${profile.id}.png` } alt="Avatar" />
 
         <input type="file" id="avatar" accept="image/*" data-file={file} onChange={handleChange} ref={ref} />
       </label>

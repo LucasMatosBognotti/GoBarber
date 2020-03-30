@@ -26,7 +26,6 @@ export default function Dashboard() {
       });
 
       const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      console.log(timezone);
 
       const data = range.map(hour => {
         const adjustedTime = setSeconds(setMinutes(setHours(date, hour), 0), 0);
@@ -54,8 +53,6 @@ export default function Dashboard() {
   function handleNextDay() {
     setDate(addDays(date, 1));
   }
-  
-  console.log(schedule);
 
   return (
     <Container>
